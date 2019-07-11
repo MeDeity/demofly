@@ -5,6 +5,7 @@ import 'package:flutter/gestures.dart';
 
 class BoxGame extends Game{
   Size screenSize;
+  bool isGameOver = false;
 
   @override
   void render(Canvas canvas) {
@@ -20,7 +21,11 @@ class BoxGame extends Game{
 
     Rect boxRect = Rect.fromLTWH(centerX-50, centerY-50, 100, 100);
     Paint boxPaint = Paint();
-    boxPaint.color = Color(0xffffffff);
+    if(isGameOver){
+      boxPaint.color = Color(0xff0000ff);      
+    }else{
+      boxPaint.color = Color(0xffffffff);  
+    }
     canvas.drawRect(boxRect, boxPaint);
   }
 
@@ -36,7 +41,14 @@ class BoxGame extends Game{
   }
 
   void onTapDown(TapDownDetails details){
-
+    double centerX = screenSize.width/2;
+    double centerY = screenSize.height/2;
+    if(details.globalPosition.dx>=centerX-50
+      &&details.globalPosition.dx<=centerX+50
+      &&details.globalPosition.dy>=centerY-50
+      &&details.globalPosition.dy<=centerY+50){
+          isGameOver = true;
+      }
   }
 
 }
